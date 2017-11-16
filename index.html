@@ -63,7 +63,7 @@
   <div class="demo"></div>
 
   <div class="setup-open">
-    <img src="./img/user-1.jpg" class="setup-open-icon">
+    <img src="./img/user-1.jpg" class="setup-open-icon" alt="user 1">
   </div>
 </header>
 
@@ -76,7 +76,7 @@
     <div class="setup-title">
       <div class="setup-user">
         <div class="upload">
-          <img class="setup-user-pic" src="./img/user-1.jpg"/>
+          <img class="setup-user-pic" src="./img/user-1.jpg" alt="user 1">
           <input type="file" name="avatar">
         </div>
         <label>
@@ -181,6 +181,28 @@
   </div>
 </template>
 
+<script>
+  var fireballSize = 22,
+      wizardSpeed = 3,
+      wizardWidth = 70,
+      wizardRatio = 1.337;
+
+  var getFireballSpeed = function(left) {
+        return left ? 5 : 2;
+      },
+
+      getWizardHeight = function() {
+        return wizardRatio * wizardWidth;
+      },
+
+      getWizardX = function(width) {
+        return (width - wizardWidth) / 2;
+      };
+
+      getWizardY = function(height) {
+        return height / 3;
+      }
+</script>
 <script src="js/game.js"></script>
 
 </body>
