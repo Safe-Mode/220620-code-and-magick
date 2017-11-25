@@ -2,7 +2,9 @@
 
 window.renderStatistics = function (ctx, names, times) {
   var canvas = document.querySelector('.demo canvas');
-  var ctx = canvas.getContext('2d');
+  var i;
+
+  ctx = canvas.getContext('2d');
 
   ctx.fillStyle = ('rgba(0, 0, 0, 0.7)');
   ctx.fillRect(110, 20, 420, 270);
@@ -17,7 +19,7 @@ window.renderStatistics = function (ctx, names, times) {
 
   var max = -1;
 
-  for (var i = 0; i < times.length; i++) {
+  for (i = 0; i < times.length; i++) {
     var time = times[i];
     if (time > max) {
       max = time;
@@ -47,7 +49,7 @@ window.renderStatistics = function (ctx, names, times) {
     return opacity;
   };
 
-  for (var i = 0; i < times.length; i++) {
+  for (i = 0; i < times.length; i++) {
     var barColor = 'rgba(0, 0, 255, ' + getRandomOpacity() + ')';
     var result = Math.floor(times[i]);
 
