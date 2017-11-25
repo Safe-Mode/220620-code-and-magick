@@ -1,4 +1,6 @@
-window.renderStatistics = function(ctx, names, times) {
+'use strict';
+
+window.renderStatistics = function (ctx, names, times) {
   var canvas = document.querySelector('.demo canvas');
   var ctx = canvas.getContext('2d');
 
@@ -15,7 +17,7 @@ window.renderStatistics = function(ctx, names, times) {
 
   var max = -1;
 
-  for(var i = 0 ; i < times.length; i++) {
+  for (var i = 0; i < times.length; i++) {
     var time = times[i];
     if (time > max) {
       max = time;
@@ -31,7 +33,7 @@ window.renderStatistics = function(ctx, names, times) {
   var lineHeight = 24;
   var playerBarColor = 'rgba(255, 0, 0, 1)';
 
-  var getRandomOpacity = function (min, max) {
+  var getRandomOpacity = function () {
     var opacity = Math.round(Math.random() * 10) / 10;
 
     if (opacity === 0) {
@@ -43,10 +45,10 @@ window.renderStatistics = function(ctx, names, times) {
     }
 
     return opacity;
-  }
+  };
 
   for (var i = 0; i < times.length; i++) {
-    var barColor = 'rgba(0, 0, 255, ' + getRandomOpacity(0, 1) + ')';
+    var barColor = 'rgba(0, 0, 255, ' + getRandomOpacity() + ')';
     var result = Math.floor(times[i]);
 
     ctx.fillStyle = barColor;
@@ -60,4 +62,4 @@ window.renderStatistics = function(ctx, names, times) {
     ctx.fillText(names[i], initialX + (barWidth + indent) * i, initialY + lineHeight);
     ctx.fillText(result, initialX + (barWidth + indent) * i, initialY - lineHeight / 2 - times[i] * step);
   }
-}
+};
