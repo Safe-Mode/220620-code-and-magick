@@ -1,11 +1,6 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
-  var canvas = document.querySelector('.demo canvas');
-  var i;
-
-  ctx = canvas.getContext('2d');
-
   ctx.fillStyle = ('rgba(0, 0, 0, 0.7)');
   ctx.fillRect(110, 20, 420, 270);
 
@@ -18,6 +13,7 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Список результатов:', 120, 60);
 
   var max = -1;
+  var i;
 
   for (i = 0; i < times.length; i++) {
     var time = times[i];
