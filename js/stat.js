@@ -1,33 +1,50 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
+  var CANVAS_INIT_X = 100;
+  var CANVAS_INIT_Y = 10;
+  var CANVAS_SHADOW_INIT_X = 110;
+  var CANVAS_SHADOW_INIT_Y = 20;
+  var CANVAS_WIDTH = 420;
+  var CANVAS_HEIGHT = 270;
+  var CANVAS_PADDING_X = 20;
+  var CANVAS_PADDING_Y = 30;
+
+  var textInitX = CANVAS_INIT_X + CANVAS_PADDING_X;
+  var textInitY = CANVAS_INIT_Y + CANVAS_PADDING_Y
+  var lineIndent = 20;
+  var i;
+
   ctx.fillStyle = ('rgba(0, 0, 0, 0.7)');
-  ctx.fillRect(110, 20, 420, 270);
+  ctx.fillRect(CANVAS_SHADOW_INIT_X, CANVAS_SHADOW_INIT_Y, CANVAS_WIDTH, CANVAS_HEIGHT);
 
   ctx.fillStyle = ('#ffffff');
-  ctx.fillRect(100, 10, 420, 270);
+  ctx.fillRect(CANVAS_INIT_X, CANVAS_INIT_Y, CANVAS_WIDTH, CANVAS_HEIGHT);
 
   ctx.font = '16px PT Mono';
   ctx.fillStyle = ('#000000');
-  ctx.fillText('Ура вы победили!', 120, 40);
-  ctx.fillText('Список результатов:', 120, 60);
+  ctx.fillText('Ура вы победили!', textInitX, textInitY);
+  ctx.fillText('Список результатов:', textInitX, textInitY + lineIndent);
 
-  var max = -1;
-  var i;
+  var getMaxNumber = function (array) {
+    var max = -1;
 
-  for (i = 0; i < times.length; i++) {
-    var time = times[i];
-    if (time > max) {
-      max = time;
+    for (var i = 0; i < array.length; i++) {
+      var value = array[i];
+      if (value > max) {
+        max = value;
+      }
     }
+
+    return max;
   }
 
   var histogramHeight = 150;
-  var step = histogramHeight / (max - 0);
+  var step = histogramHeight / (getMaxNumber(times) - 0);
   var barWidth = 40;
   var indent = 50;
-  var initialX = 120;
-  var initialY = 240;
+  var histogramInitX = CANVAS_INIT_X + CANVAS_PADDING_X;
+  var histogramInitY = CANVAS_HEIGHT - CANVAS_PADDING_Y;
   var lineHeight = 24;
   var playerBarColor = 'rgba(255, 0, 0, 1)';
 
@@ -47,7 +64,7 @@ window.renderStatistics = function (ctx, names, times) {
 
   for (i = 0; i < times.length; i++) {
     var barColor = 'rgba(0, 0, 255, ' + getRandomOpacity() + ')';
-    var result = Math.floor(times[i]);
+    var result = Math.round(times[i]);
 
     ctx.fillStyle = barColor;
 
@@ -55,9 +72,9 @@ window.renderStatistics = function (ctx, names, times) {
       ctx.fillStyle = playerBarColor;
     }
 
-    ctx.fillRect(initialX + (barWidth + indent) * i, initialY, barWidth, times[i] * step * (-1));
+    ctx.fillRect(histogramInitX + (barWidth + indent) * i, histogramInitY, barWidth, times[i] * step * (-1));
     ctx.fillStyle = '#000000';
-    ctx.fillText(names[i], initialX + (barWidth + indent) * i, initialY + lineHeight);
-    ctx.fillText(result, initialX + (barWidth + indent) * i, initialY - lineHeight / 2 - times[i] * step);
+    ctx.fillText(names[i], histogramInitX + (barWidth + indent) * i, histogramInitY + lineHeight);
+    ctx.fillText(result, histogramInitX + (barWidth + indent) * i, histogramInitY - lineHeight / 2 - times[i] * step);
   }
 };
