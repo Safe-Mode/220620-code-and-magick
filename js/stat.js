@@ -11,9 +11,8 @@ window.renderStatistics = function (ctx, names, times) {
   var CANVAS_PADDING_Y = 30;
 
   var textInitX = CANVAS_INIT_X + CANVAS_PADDING_X;
-  var textInitY = CANVAS_INIT_Y + CANVAS_PADDING_Y
+  var textInitY = CANVAS_INIT_Y + CANVAS_PADDING_Y;
   var lineIndent = 20;
-  var i;
 
   ctx.fillStyle = ('rgba(0, 0, 0, 0.7)');
   ctx.fillRect(CANVAS_SHADOW_INIT_X, CANVAS_SHADOW_INIT_Y, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -37,7 +36,7 @@ window.renderStatistics = function (ctx, names, times) {
     }
 
     return max;
-  }
+  };
 
   var histogramHeight = 150;
   var step = histogramHeight / (getMaxNumber(times) - 0);
@@ -62,7 +61,7 @@ window.renderStatistics = function (ctx, names, times) {
     return opacity;
   };
 
-  for (i = 0; i < times.length; i++) {
+  for (var i = 0; i < times.length; i++) {
     var barColor = 'rgba(0, 0, 255, ' + getRandomOpacity() + ')';
     var result = Math.round(times[i]);
 
