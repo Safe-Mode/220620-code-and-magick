@@ -1,7 +1,6 @@
 'use strict';
 
-var userDialog = document.querySelector('.setup');
-var names = [
+var NAMES = [
   'Иван',
   'Хуан Себастьян',
   'Мария',
@@ -11,7 +10,7 @@ var names = [
   'Люпита',
   'Вашингтон'
 ];
-var surnames = [
+var SURNAMES = [
   'да Марья',
   'Верон',
   'Мирабелла',
@@ -21,7 +20,7 @@ var surnames = [
   'Нионго',
   'Ирвинг'
 ];
-var coatColors = [
+var COAT_COLORS = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
   'rgb(146, 100, 161)',
@@ -29,7 +28,7 @@ var coatColors = [
   'rgb(215, 210, 55)',
   'rgb(0, 0, 0)'
 ];
-var eyesColors = [
+var EYES_COLORS = [
   'black',
   'red',
   'blue',
@@ -37,34 +36,36 @@ var eyesColors = [
   'green'
 ];
 
+var userDialog = document.querySelector('.setup');
+
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
 var wizards = [
   {
-    name: names[getRandomInt(0, names.length - 1)] + ' ' +
-          surnames[getRandomInt(0, surnames.length - 1)],
-    coatColor: coatColors[getRandomInt(0, coatColors.length - 1)],
-    eyesColor: eyesColors[getRandomInt(0, eyesColors.length - 1)],
+    name: NAMES[getRandomInt(0, NAMES.length - 1)] + ' ' +
+          SURNAMES[getRandomInt(0, SURNAMES.length - 1)],
+    coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
+    eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)],
   },
   {
-    name: names[getRandomInt(0, names.length - 1)] + ' ' +
-          surnames[getRandomInt(0, surnames.length - 1)],
-    coatColor: coatColors[getRandomInt(0, coatColors.length - 1)],
-    eyesColor: eyesColors[getRandomInt(0, eyesColors.length - 1)],
+    name: NAMES[getRandomInt(0, NAMES.length - 1)] + ' ' +
+          SURNAMES[getRandomInt(0, SURNAMES.length - 1)],
+    coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
+    eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)],
   },
   {
-    name: names[getRandomInt(0, names.length - 1)] + ' ' +
-          surnames[getRandomInt(0, surnames.length - 1)],
-    coatColor: coatColors[getRandomInt(0, coatColors.length - 1)],
-    eyesColor: eyesColors[getRandomInt(0, eyesColors.length - 1)],
+    name: NAMES[getRandomInt(0, NAMES.length - 1)] + ' ' +
+          SURNAMES[getRandomInt(0, SURNAMES.length - 1)],
+    coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
+    eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)],
   },
   {
-    name: names[getRandomInt(0, names.length - 1)] + ' ' +
-          surnames[getRandomInt(0, surnames.length - 1)],
-    coatColor: coatColors[getRandomInt(0, coatColors.length - 1)],
-    eyesColor: eyesColors[getRandomInt(0, eyesColors.length - 1)],
+    name: NAMES[getRandomInt(0, NAMES.length - 1)] + ' ' +
+          SURNAMES[getRandomInt(0, SURNAMES.length - 1)],
+    coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
+    eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)],
   }
 ];
 
