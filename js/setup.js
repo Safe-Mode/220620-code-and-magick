@@ -35,6 +35,7 @@ var EYES_COLORS = [
   'yellow',
   'green'
 ];
+var WIZARDS_COUNT = 4;
 
 var userDialog = document.querySelector('.setup');
 
@@ -42,32 +43,22 @@ var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-var wizards = [
-  {
-    name: NAMES[getRandomInt(0, NAMES.length - 1)] + ' ' +
-          SURNAMES[getRandomInt(0, SURNAMES.length - 1)],
-    coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
-    eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)],
-  },
-  {
-    name: NAMES[getRandomInt(0, NAMES.length - 1)] + ' ' +
-          SURNAMES[getRandomInt(0, SURNAMES.length - 1)],
-    coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
-    eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)],
-  },
-  {
-    name: NAMES[getRandomInt(0, NAMES.length - 1)] + ' ' +
-          SURNAMES[getRandomInt(0, SURNAMES.length - 1)],
-    coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
-    eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)],
-  },
-  {
-    name: NAMES[getRandomInt(0, NAMES.length - 1)] + ' ' +
-          SURNAMES[getRandomInt(0, SURNAMES.length - 1)],
-    coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
-    eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)],
+var generateWizards = function (count) {
+  var wizards = [];
+
+  for (var i = 0; i < count; i++) {
+    var wizard = {
+      name: NAMES[getRandomInt(0, NAMES.length - 1)] + ' ' +
+            SURNAMES[getRandomInt(0, SURNAMES.length - 1)],
+      coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
+      eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)]
+    };
+
+    wizards[i] = wizard;
   }
-];
+
+  return wizards;
+};
 
 var similarListElement = document.querySelector('.setup-similar-list');
 
@@ -85,6 +76,7 @@ var renderWizard = function (wizard) {
 
 var insertElements = function (parentNode) {
   var fragment = document.createDocumentFragment();
+  var wizards = generateWizards(WIZARDS_COUNT);
 
   for (var i = 0; i < wizards.length; i++) {
     fragment.appendChild(renderWizard(wizards[i]));
