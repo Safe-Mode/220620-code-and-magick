@@ -35,6 +35,13 @@ var EYES_COLORS = [
   'yellow',
   'green'
 ];
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
 var WIZARDS_COUNT = 4;
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
@@ -159,3 +166,47 @@ if (detectEdge) {
     }
   });
 }
+
+var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
+var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
+var fireball = setup.querySelector('.setup-fireball-wrap');
+
+var changeColor = function (part, property, colors) {
+  var color = part.style[property];
+  // var color = getComputedStyle(part)[property];
+
+  if (!color) {
+    color = 'black';
+  }
+
+  for (var i = 0; i < colors.length; i++) {
+    if (i === colors.length - 1) {
+      part.style[property] = colors[0];
+      return;
+    }
+
+    if (color === colors[i]) {
+      part.style[property] = colors[i + 1];
+      return;
+    }
+  }
+};
+
+var onWizardCoatClick = function (evt) {
+  evt.preventDefault();
+  changeColor(wizardCoat, 'fill', COAT_COLORS);
+};
+
+var onWizardEyesClick = function (evt) {
+  evt.preventDefault();
+  changeColor(wizardEyes, 'fill', EYES_COLORS);
+};
+
+var onFireballClick = function (evt) {
+  evt.preventDefault();
+  changeColor(fireball, 'backgroundColor', FIREBALL_COLORS);
+};
+
+wizardCoat.addEventListener('click', onWizardCoatClick);
+wizardEyes.addEventListener('click', onWizardEyesClick);
+fireball.addEventListener('click', onFireballClick);
