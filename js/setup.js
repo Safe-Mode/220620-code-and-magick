@@ -45,6 +45,7 @@ var FIREBALL_COLORS = [
 var WIZARDS_COUNT = 4;
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
+var MIN_NAME_LENGTH = 2;
 
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -171,7 +172,7 @@ if (detectEdge) {
   userNameInput.addEventListener('input', function (evt) {
     var target = evt.target;
 
-    if (target.value.length < 2) {
+    if (target.value.length < MIN_NAME_LENGTH) {
       target.setCustomValidity('Имя должно состоять минимум из 2-х символов');
     } else {
       target.setCustomValidity('');
@@ -206,17 +207,17 @@ var setColor = function (part, property, input, colors) {
 
 var onWizardCoatClick = function (evt) {
   evt.preventDefault();
-  setColor(wizardCoat, 'fill', wizardCoatInput, COAT_COLORS);
+  setColor(evt.currentTarget, 'fill', wizardCoatInput, COAT_COLORS);
 };
 
 var onWizardEyesClick = function (evt) {
   evt.preventDefault();
-  setColor(wizardEyes, 'fill', wizardEyesInput, EYES_COLORS);
+  setColor(evt.currentTarget, 'fill', wizardEyesInput, EYES_COLORS);
 };
 
 var onFireballClick = function (evt) {
   evt.preventDefault();
-  setColor(fireball, 'backgroundColor', fireballInput, FIREBALL_COLORS);
+  setColor(evt.currentTarget, 'backgroundColor', fireballInput, FIREBALL_COLORS);
 };
 
 wizardCoat.addEventListener('click', onWizardCoatClick);
