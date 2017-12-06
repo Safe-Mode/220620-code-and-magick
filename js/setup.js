@@ -168,25 +168,25 @@ if (detectEdge) {
 }
 
 var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
+var wizardCoatInput = setup.querySelector('input[name=coat-color]');
 var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
+var wizardEyesInput = setup.querySelector('input[name=eyes-color]');
 var fireball = setup.querySelector('.setup-fireball-wrap');
+var fireballInput = setup.querySelector('input[name=fireball-color]');
 
-var changeColor = function (part, property, colors) {
-  var color = part.style[property];
-  // var color = getComputedStyle(part)[property];
-
-  if (!color) {
-    color = 'black';
-  }
+var setColor = function (part, property, input, colors) {
+  var color = input.value;
 
   for (var i = 0; i < colors.length; i++) {
     if (i === colors.length - 1) {
       part.style[property] = colors[0];
+      input.value = colors[0];
       return;
     }
 
     if (color === colors[i]) {
       part.style[property] = colors[i + 1];
+      input.value = colors[i + 1];
       return;
     }
   }
@@ -194,17 +194,17 @@ var changeColor = function (part, property, colors) {
 
 var onWizardCoatClick = function (evt) {
   evt.preventDefault();
-  changeColor(wizardCoat, 'fill', COAT_COLORS);
+  setColor(wizardCoat, 'fill', wizardCoatInput, COAT_COLORS);
 };
 
 var onWizardEyesClick = function (evt) {
   evt.preventDefault();
-  changeColor(wizardEyes, 'fill', EYES_COLORS);
+  setColor(wizardEyes, 'fill', wizardEyesInput, EYES_COLORS);
 };
 
 var onFireballClick = function (evt) {
   evt.preventDefault();
-  changeColor(fireball, 'backgroundColor', FIREBALL_COLORS);
+  setColor(fireball, 'backgroundColor', fireballInput, FIREBALL_COLORS);
 };
 
 wizardCoat.addEventListener('click', onWizardCoatClick);
