@@ -95,6 +95,7 @@ var insertElements = function (parentNode) {
 var setup = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
+var userNameInput = setup.querySelector('.setup-user-name');
 
 var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
@@ -110,6 +111,16 @@ var openPopup = function (popup) {
 var closePopup = function (popup) {
   popup.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
+};
+
+var onInputFocus = function (evt) {
+  evt.preventDefault();
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+var onInputBlur = function (evt) {
+  evt.preventDefault();
+  document.addEventListener('keydown', onPopupEscPress);
 };
 
 insertElements(similarListElement);
@@ -135,7 +146,8 @@ setupClose.addEventListener('keydown', function (evt) {
   }
 });
 
-var userNameInput = setup.querySelector('.setup-user-name');
+userNameInput.addEventListener('focus', onInputFocus);
+userNameInput.addEventListener('blur', onInputBlur);
 
 var detectEdge = function () {
   return (navigator.userAgent.search(/Edge/) > 0) ? true : false;
