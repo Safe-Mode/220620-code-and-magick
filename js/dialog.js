@@ -8,8 +8,8 @@
   var setupClose = setup.querySelector('.setup-close');
   var userNameInput = setup.querySelector('.setup-user-name');
 
-  var onPopupEscPress = function () {
-    window.util.isEscEvent(closePopup(setup));
+  var onPopupEscPress = function (evt) {
+    window.util.isEscEvent(evt, closePopup, setup);
   };
 
   var openPopup = function (popup) {
@@ -48,16 +48,16 @@
     openPopup(setup);
   });
 
-  setupOpen.addEventListener('keydown', function () {
-    window.util.isEnterEvent(openPopup(setup));
+  setupOpen.addEventListener('keydown', function (evt) {
+    window.util.isEnterEvent(evt, openPopup, setup);
   });
 
   setupClose.addEventListener('click', function () {
     closePopup(setup);
   });
 
-  setupClose.addEventListener('keydown', function () {
-    window.util.isEnterEvent(closePopup(setup));
+  setupClose.addEventListener('keydown', function (evt) {
+    window.util.isEnterEvent(evt, closePopup, setup);
   });
 
   userNameInput.addEventListener('focus', onInputFocus);
