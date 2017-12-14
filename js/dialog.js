@@ -9,7 +9,9 @@
   var userNameInput = setup.querySelector('.setup-user-name');
 
   var onPopupEscPress = function (evt) {
-    window.util.isEscEvent(evt, closePopup, setup);
+    window.util.isEscEvent(evt, function () {
+      closePopup(setup);
+    });
   };
 
   var openPopup = function (popup) {
@@ -49,7 +51,9 @@
   });
 
   setupOpen.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, openPopup, setup);
+    window.util.isEnterEvent(evt, function () {
+      openPopup(setup);
+    });
   });
 
   setupClose.addEventListener('click', function () {
@@ -57,7 +61,9 @@
   });
 
   setupClose.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, closePopup, setup);
+    window.util.isEnterEvent(evt, function () {
+      closePopup(setup);
+    });
   });
 
   userNameInput.addEventListener('focus', onInputFocus);
