@@ -5,14 +5,14 @@
   var ENTER_KEYCODE = 13;
 
   window.util = {
-    isEscEvent: function (evt, action, element) {
+    isEscEvent: function (evt, action) {
       if (evt.keyCode === ESC_KEYCODE) {
-        action(element);
+        action();
       }
     },
-    isEnterEvent: function (evt, action, element) {
+    isEnterEvent: function (evt, action) {
       if (evt.keyCode === ENTER_KEYCODE) {
-        action(element);
+        action();
       }
     },
     getRandomInt: function (min, max) {
