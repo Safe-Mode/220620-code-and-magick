@@ -98,11 +98,11 @@
   var fireballInput = setup.querySelector('input[name=fireball-color]');
 
   var fillElement = function (element, color) {
-    element.style.fill = color.value;
+    element.style.fill = color;
   };
 
   var changeElementBackground = function (element, color) {
-    element.style.backgroundColor = color.value;
+    element.style.backgroundColor = color;
   };
 
   var onWizardCoatClick = function (evt) {
