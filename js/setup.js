@@ -1,26 +1,6 @@
 'use strict';
 
 (function () {
-  var NAMES = [
-    'Иван',
-    'Хуан Себастьян',
-    'Мария',
-    'Кристоф',
-    'Виктор',
-    'Юлия',
-    'Люпита',
-    'Вашингтон'
-  ];
-  var SURNAMES = [
-    'да Марья',
-    'Верон',
-    'Мирабелла',
-    'Вальц',
-    'Онопко',
-    'Топольницкая',
-    'Нионго',
-    'Ирвинг'
-  ];
   var COAT_COLORS = [
     'rgb(101, 137, 164)',
     'rgb(241, 43, 107)',
@@ -43,52 +23,49 @@
     '#e848d5',
     '#e6e848'
   ];
+  var DOWNLOAD_URL = 'https://1510.dump.academy/code-and-magick/data';
+  var UPLOAD_URL = 'https://js.dump.academy/code-and-magick';
   var WIZARDS_COUNT = 4;
 
   var setup = document.querySelector('.setup');
   var similarListElement = document.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-  var generateWizards = function (count) {
-    var wizards = [];
-
-    for (var i = 0; i < count; i++) {
-      var wizard = {
-        name: NAMES[window.util.getRandomInt(0, NAMES.length - 1)] + ' ' +
-              SURNAMES[window.util.getRandomInt(0, SURNAMES.length - 1)],
-        coatColor: COAT_COLORS[window.util.getRandomInt(0, COAT_COLORS.length - 1)],
-        eyesColor: EYES_COLORS[window.util.getRandomInt(0, EYES_COLORS.length - 1)]
-      };
-
-      wizards[i] = wizard;
-    }
-
-    return wizards;
-  };
-
   var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
 
     return wizardElement;
   };
 
-  var insertElements = function (parentNode) {
+  var insertWizards = function (wizards) {
     var fragment = document.createDocumentFragment();
-    var wizards = generateWizards(WIZARDS_COUNT);
 
-    for (var i = 0; i < wizards.length; i++) {
+    for (var i = 0; i < WIZARDS_COUNT; i++) {
       fragment.appendChild(renderWizard(wizards[i]));
     }
 
-    parentNode.appendChild(fragment);
+    similarListElement.appendChild(fragment);
+    setup.querySelector('.setup-similar').classList.remove('hidden');
   };
 
-  insertElements(similarListElement);
-  setup.querySelector('.setup-similar').classList.remove('hidden');
+  var onXHRError = function (errorMessage) {
+    var node = document.createElement('div');
+
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+    node.textContent = errorMessage;
+
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.backend.load(DOWNLOAD_URL, insertWizards, onXHRError);
 
   var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
   var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
