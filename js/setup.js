@@ -51,7 +51,7 @@
     setup.querySelector('.setup-similar').classList.remove('hidden');
   };
 
-  window.backend.load(DOWNLOAD_URL, insertWizards, window.utilonXHRError);
+  window.backend.load(DOWNLOAD_URL, insertWizards, window.util.onXHRError);
 
   var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
   var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
