@@ -24,7 +24,6 @@
     '#e6e848'
   ];
   var DOWNLOAD_URL = 'https://1510.dump.academy/code-and-magick/data';
-  var UPLOAD_URL = 'https://js.dump.academy/code-and-magick';
   var WIZARDS_COUNT = 4;
 
   var setup = document.querySelector('.setup');
@@ -52,20 +51,7 @@
     setup.querySelector('.setup-similar').classList.remove('hidden');
   };
 
-  var onXHRError = function (errorMessage) {
-    var node = document.createElement('div');
-
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-    node.textContent = errorMessage;
-
-    document.body.insertAdjacentElement('afterbegin', node);
-  };
-
-  window.backend.load(DOWNLOAD_URL, insertWizards, onXHRError);
+  window.backend.load(DOWNLOAD_URL, insertWizards, window.utilonXHRError);
 
   var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
   var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
