@@ -2,11 +2,13 @@
 
 (function () {
   var MIN_NAME_LENGTH = 2;
+  var UPLOAD_URL = 'https://js.dump.academy/code-and-magick';
 
   var setup = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
   var userNameInput = setup.querySelector('.setup-user-name');
+  var form = setup.querySelector('.setup-wizard-form');
 
   var onPopupEscPress = function (evt) {
     window.util.isEscEvent(evt, function () {
@@ -22,8 +24,8 @@
   var closePopup = function (popup) {
     popup.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
-    setup.style.top = '';
-    setup.style.left = '';
+    popup.style.top = '';
+    popup.style.left = '';
   };
 
   var onInputFocus = function (evt) {
@@ -83,6 +85,15 @@
       }
     });
   }
+
+  var onLoadUserData = function () {
+    closePopup(setup);
+  };
+
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), UPLOAD_URL, onLoadUserData, window.util.onXHRError);
+    evt.preventDefault();
+  });
 
   var dialogHandle = setup.querySelector('.setup-user-pic');
 
