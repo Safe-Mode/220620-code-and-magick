@@ -68,5 +68,5 @@
   wizardEyes.addEventListener('click', onWizardEyesClick);
   fireball.addEventListener('click', onFireballClick);
 
-  return window.wizard = wizard;
+  window.wizard = wizard;
 })();
