@@ -1,91 +1,74 @@
 'use strict';
 
 (function () {
-  var COAT_COLORS = [
-    'rgb(101, 137, 164)',
-    'rgb(241, 43, 107)',
-    'rgb(146, 100, 161)',
-    'rgb(56, 159, 117)',
-    'rgb(215, 210, 55)',
-    'rgb(0, 0, 0)'
-  ];
-  var EYES_COLORS = [
-    'black',
-    'red',
-    'blue',
-    'yellow',
-    'green'
-  ];
-  var FIREBALL_COLORS = [
-    '#ee4830',
-    '#30a8ee',
-    '#5ce6c0',
-    '#e848d5',
-    '#e6e848'
-  ];
   var DOWNLOAD_URL = 'https://1510.dump.academy/code-and-magick/data';
-  var WIZARDS_COUNT = 4;
 
-  var setup = document.querySelector('.setup');
-  var similarListElement = document.querySelector('.setup-similar-list');
-  var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+  var coatColor;
+  var eyesColor;
+  var fireballColor;
+  var wizards = [];
 
-  var renderWizard = function (wizard) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
+  var getRank = function (wizard) {
+    var rank = 0;
 
-    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
-
-    return wizardElement;
-  };
-
-  var insertWizards = function (wizards) {
-    var fragment = document.createDocumentFragment();
-
-    for (var i = 0; i < WIZARDS_COUNT; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
     }
 
-    similarListElement.appendChild(fragment);
-    setup.querySelector('.setup-similar').classList.remove('hidden');
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+
+    if (wizard.colorFireball === fireballColor) {
+      rank += 0.5;
+    }
+
+    return rank;
   };
 
-  window.backend.load(DOWNLOAD_URL, insertWizards, window.util.onXHRError);
-
-  var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
-  var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
-  var fireball = setup.querySelector('.setup-fireball-wrap');
-  var wizardCoatInput = setup.querySelector('input[name=coat-color]');
-  var wizardEyesInput = setup.querySelector('input[name=eyes-color]');
-  var fireballInput = setup.querySelector('input[name=fireball-color]');
-
-  var fillElement = function (element, color) {
-    element.style.fill = color;
+  var namesComparator = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
   };
 
-  var changeElementBackground = function (element, color) {
-    element.style.backgroundColor = color;
+  var updateWizards = function () {
+    window.render(wizards.sort(function (left, right) {
+      var rankDiff = getRank(right) - getRank(left);
+
+      if (rankDiff === 0) {
+        rankDiff = namesComparator(left.name, right.name);
+      }
+
+      return rankDiff;
+    }));
   };
 
-  var onWizardCoatClick = function (evt) {
-    evt.preventDefault();
-    window.colorizeElement(evt.currentTarget, wizardCoatInput, COAT_COLORS, fillElement);
+  window.wizard.onEyesChange = function (color) {
+    eyesColor = color;
+    window.debounce(updateWizards);
   };
 
-  var onWizardEyesClick = function (evt) {
-    evt.preventDefault();
-    window.colorizeElement(evt.currentTarget, wizardEyesInput, EYES_COLORS, fillElement);
+  window.wizard.onCoatChange = function (color) {
+    coatColor = color;
+    window.debounce(updateWizards);
   };
 
-  var onFireballClick = function (evt) {
-    evt.preventDefault();
-    window.colorizeElement(evt.currentTarget, fireballInput, FIREBALL_COLORS, changeElementBackground);
+  window.wizard.onFireballChange = function (color) {
+    fireballColor = color;
+    window.debounce(updateWizards);
   };
 
-  wizardCoat.addEventListener('click', onWizardCoatClick);
-  wizardEyes.addEventListener('click', onWizardEyesClick);
-  fireball.addEventListener('click', onFireballClick);
+  var onLoadSuccess = function (data) {
+    wizards = data;
+    updateWizards();
+  };
+
+  window.backend.load(DOWNLOAD_URL, onLoadSuccess, window.util.onXHRError);
 
   var shopElement = document.querySelector('.setup-artifacts-shop');
   var draggedItem = null;
