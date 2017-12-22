@@ -7,6 +7,7 @@
   var eyesColor;
   var fireballColor;
   var wizards = [];
+  var lastTimeout;
 
   var getRank = function (wizard) {
     var rank = 0;
@@ -50,17 +51,17 @@
 
   window.wizard.onEyesChange = function (color) {
     eyesColor = color;
-    updateWizards();
+    window.debounce(updateWizards);
   };
 
   window.wizard.onCoatChange = function (color) {
     coatColor = color;
-    updateWizards();
+    window.debounce(updateWizards);
   };
 
   window.wizard.onFireballChange = function (color) {
     fireballColor = color;
-    updateWizards();
+    window.debounce(updateWizards);
   };
 
   var onLoadSuccess = function (data) {
