@@ -24,49 +24,46 @@
     '#e6e848'
   ];
 
-  var setup = document.querySelector('.setup');
-  var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
-  var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
-  var fireball = setup.querySelector('.setup-fireball-wrap');
-  var wizardCoatInput = setup.querySelector('input[name=coat-color]');
-  var wizardEyesInput = setup.querySelector('input[name=eyes-color]');
-  var fireballInput = setup.querySelector('input[name=fireball-color]');
-
-  var wizard = {
-    onEyesChange: function () {},
-    onCoatChange: function () {},
-    onFireballChange: function () {}
+  var Wizard = function (data) {
+    this.name = data.name;
+    this.coatColor = data.colorCoat;
+    this.eyesColor = data.colorEyes;
   };
 
-  var fillElement = function (element, color) {
-    element.style.fill = color;
+  Wizard.prototype = {
+    onChange: function (wizard) {
+      return wizard;
+    },
+
+    setName: function (name) {
+      if (!name) {
+        throw new Error('Имя не задано');
+      }
+
+      if (name.length > 30) {
+        throw new Error('Недопустимое значение имени мага: ' + name);
+      }
+
+      this.name = name;
+      this.onChange(this);
+      return name;
+    },
+
+    changeCoatColor: function (wizardPart, colorInput, callback) {
+      window.colorizeElement(wizardPart, colorInput, COAT_COLORS, callback);
+      this.onChange(this);
+    },
+
+    changeEyesColor: function (wizardPart, colorInput, callback) {
+      window.colorizeElement(wizardPart, colorInput, EYES_COLORS, callback);
+      this.onChange(this);
+    },
+
+    changeFireballColor: function (wizardPart, colorInput, callback) {
+      window.colorizeElement(wizardPart, colorInput, FIREBALL_COLORS, callback);
+      this.onChange(this);
+    }
   };
 
-  var changeElementBackground = function (element, color) {
-    element.style.backgroundColor = color;
-  };
-
-  var onWizardCoatClick = function (evt) {
-    evt.preventDefault();
-    window.colorizeElement(evt.currentTarget, wizardCoatInput, COAT_COLORS, fillElement);
-    wizard.onCoatChange(wizardCoatInput.value);
-  };
-
-  var onWizardEyesClick = function (evt) {
-    evt.preventDefault();
-    window.colorizeElement(evt.currentTarget, wizardEyesInput, EYES_COLORS, fillElement);
-    wizard.onEyesChange(wizardEyesInput.value);
-  };
-
-  var onFireballClick = function (evt) {
-    evt.preventDefault();
-    window.colorizeElement(evt.currentTarget, fireballInput, FIREBALL_COLORS, changeElementBackground);
-    wizard.onFireballChange(fireballInput.value);
-  };
-
-  wizardCoat.addEventListener('click', onWizardCoatClick);
-  wizardEyes.addEventListener('click', onWizardEyesClick);
-  fireball.addEventListener('click', onFireballClick);
-
-  window.wizard = wizard;
+  window.Wizard = Wizard;
 })();
