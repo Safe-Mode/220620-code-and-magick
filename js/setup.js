@@ -3,23 +3,20 @@
 (function () {
   var DOWNLOAD_URL = 'https://1510.dump.academy/code-and-magick/data';
 
-  var coatColor;
-  var eyesColor;
-  var fireballColor;
   var wizards = [];
 
   var getRank = function (wizard) {
     var rank = 0;
 
-    if (wizard.colorCoat === coatColor) {
+    if (wizard.colorCoat === window.myWizard.coatColor) {
       rank += 2;
     }
 
-    if (wizard.colorEyes === eyesColor) {
+    if (wizard.colorEyes === window.myWizard.eyesColor) {
       rank += 1;
     }
 
-    if (wizard.colorFireball === fireballColor) {
+    if (wizard.colorFireball === window.myWizard.fireballColor) {
       rank += 0.5;
     }
 
@@ -48,18 +45,7 @@
     }));
   };
 
-  window.wizard.onEyesChange = function (color) {
-    eyesColor = color;
-    window.debounce(updateWizards);
-  };
-
-  window.wizard.onCoatChange = function (color) {
-    coatColor = color;
-    window.debounce(updateWizards);
-  };
-
-  window.wizard.onFireballChange = function (color) {
-    fireballColor = color;
+  window.myWizard.onChange = function () {
     window.debounce(updateWizards);
   };
 

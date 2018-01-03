@@ -28,6 +28,7 @@
     this.name = data.name;
     this.coatColor = data.colorCoat;
     this.eyesColor = data.colorEyes;
+    this.fireballColor = data.colorFireball;
   };
 
   Wizard.prototype = {
@@ -51,16 +52,19 @@
 
     changeCoatColor: function (wizardPart, colorInput, callback) {
       window.colorizeElement(wizardPart, colorInput, COAT_COLORS, callback);
+      this.coatColor = colorInput.value;
       this.onChange(this);
     },
 
     changeEyesColor: function (wizardPart, colorInput, callback) {
       window.colorizeElement(wizardPart, colorInput, EYES_COLORS, callback);
+      this.eyesColor = colorInput.value;
       this.onChange(this);
     },
 
     changeFireballColor: function (wizardPart, colorInput, callback) {
       window.colorizeElement(wizardPart, colorInput, FIREBALL_COLORS, callback);
+      this.fireballColor = colorInput.value;
       this.onChange(this);
     }
   };
