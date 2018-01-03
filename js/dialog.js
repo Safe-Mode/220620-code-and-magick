@@ -95,7 +95,7 @@
     evt.preventDefault();
   });
 
-  var dialogHandle = setup.querySelector('.setup-user-pic');
+  var dialogHandle = setup.querySelector('.upload');
 
   dialogHandle.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -105,8 +105,12 @@
       y: evt.clientY
     };
 
+    var dragged = false;
+
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
+
+      dragged = true;
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
@@ -127,6 +131,14 @@
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+
+      if (dragged) {
+        var onClickPreventDefault = function (clickEvt) {
+          clickEvt.preventDefault();
+          dialogHandle.removeEventListener('click', onClickPreventDefault)
+        };
+        dialogHandle.addEventListener('click', onClickPreventDefault);
+      }
     };
 
     document.addEventListener('mousemove', onMouseMove);
