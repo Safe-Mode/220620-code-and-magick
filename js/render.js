@@ -7,21 +7,23 @@
   var similarListElement = similarElement.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-  var renderWizard = function (wizard) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
+  var createWizard = function (wizard) {
+    var element = similarWizardTemplate.cloneNode(true);
+    var wizardElement = element.querySelector('.wizard');
 
-    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
+    element.querySelector('.setup-similar-label').textContent = wizard.name;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
 
-    return wizardElement;
+    return element;
   };
 
   window.render = function (data) {
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < WIZARDS_COUNT; i++) {
-      fragment.appendChild(renderWizard(data[i]));
+      var wizard = new window.Wizard(data[i]);
+      fragment.appendChild(createWizard(wizard));
     }
 
     similarListElement.innerHTML = '';
