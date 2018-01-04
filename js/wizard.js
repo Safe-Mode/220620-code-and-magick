@@ -69,5 +69,28 @@
     }
   };
 
+  var formElement = document.querySelector('.setup-wizard-form');
+  var wizardElement = document.querySelector('.setup-wizard');
+  var wizardCoatElement = wizardElement.querySelector('.wizard-coat');
+  var wizardEyesElement = wizardElement.querySelector('.wizard-eyes');
+
+  formElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    var wizardCopy = document.querySelector('svg').cloneNode(true);
+
+    wizardCopy.querySelector('#wizard-coat').style.fill = wizardCoatElement.style.fill;
+    wizardCopy.querySelector('#wizard-eyes').style.fill = wizardEyesElement.style.fill;
+
+    var wizardBase64Right = window.svg2base64(wizardCopy);
+
+    // Чтобы развернуть мага, его надо подвинуть на его ширину, а затем отразить
+    wizardCopy.querySelector('#wizard').setAttribute('transform', 'translate(62, 0) scale(-1, 1)');
+
+    var wizardBase64Left = window.svg2base64(wizardCopy);
+
+    window.restartGame(wizardBase64Right, wizardBase64Left);
+  });
+
   window.Wizard = Wizard;
 })();
