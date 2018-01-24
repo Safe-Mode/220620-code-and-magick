@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  var DOWNLOAD_URL = 'https://1510.dump.academy/code-and-magick/data';
+  var DOWNLOAD_URL = 'https://1510.dump.academy/code-and-magick/dat';
+  var CALLBACK_NAME = '__jsonpCallback'; // for jsonp request
 
   var wizards = [];
 
@@ -54,5 +55,6 @@
     updateWizards();
   };
 
-  window.backend.load(DOWNLOAD_URL, onLoadSuccess, window.util.onXHRError);
+  // window.backend.load(DOWNLOAD_URL, onLoadSuccess, window.util.onXHRError);
+  window.backendJSONP(DOWNLOAD_URL, CALLBACK_NAME, onLoadSuccess, window.util.onXHRError);
 })();
