@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var DOWNLOAD_URL = 'https://1510.dump.academy/code-and-magick/dat';
+  var DOWNLOAD_URL = 'https://1510.dump.academy/code-and-magick/data';
   var CALLBACK_NAME = '__jsonpCallback'; // for jsonp request
 
   var wizards = [];
